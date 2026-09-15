@@ -87,6 +87,7 @@ export default function Booking() {
             muted
             playsInline
             preload="auto"
+            poster="/images/booking-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover"
           >
             <source src="/videos/booking-bg.mp4" type="video/mp4" />

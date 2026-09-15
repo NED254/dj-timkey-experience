@@ -25,6 +25,7 @@ export default function Arrival() {
         muted
         playsInline
         preload="auto"
+        poster="/images/arrival-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover"
       >
         <source src="/videos/intro-logo.mp4" type="video/mp4" />
