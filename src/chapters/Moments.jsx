@@ -2,10 +2,10 @@
 import { motion } from 'framer-motion'
 
 const MOMENTS = [
-  { label: 'Freshers Night', src: '/videos/freshers-night.mp4' },
-  { label: 'Weekend Club Tour', src: '/videos/weekend-club-tour.mp4' },
-  { label: 'University Festival', src: '/videos/university-festival.mp4' },
-  { label: 'Citizen TV - 10 Over 10', src: '/videos/citizen-tv.mp4' },
+  { label: 'Freshers Night', src: '/videos/freshers-night.mp4', poster: '/images/freshers-night-poster.jpg' },
+  { label: 'Weekend Club Tour', src: '/videos/weekend-club-tour.mp4', poster: '/images/weekend-club-tour-poster.jpg' },
+  { label: 'University Festival', src: '/videos/university-festival.mp4', poster: '/images/university-festival-poster.jpg' },
+  { label: 'Citizen TV - 10 Over 10', src: '/videos/citizen-tv.mp4', poster: '/images/citizen-tv-poster.jpg' },
 ]
 
 const STARS = Array.from({ length: 70 }, (_, i) => {
@@ -43,7 +43,7 @@ function StarField() {
   )
 }
 
-function PhoneCard({ label, src, offset, onEnded }) {
+function PhoneCard({ label, src, poster, offset, onEnded }) {
   const isCenter = offset === 0
   const videoRef = useRef(null)
 
@@ -96,7 +96,8 @@ function PhoneCard({ label, src, offset, onEnded }) {
           src={src}
           muted
           playsInline
-          preload="metadata"
+          poster={poster}
+          preload="auto"
           onEnded={isCenter ? onEnded : undefined}
           className="w-full h-full object-cover"
         />
@@ -140,6 +141,7 @@ export default function Moments() {
             key={moment.label}
             label={moment.label}
             src={moment.src}
+            poster={moment.poster}
             offset={i - activeIndex}
             onEnded={goNext}
           />

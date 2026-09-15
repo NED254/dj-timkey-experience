@@ -8,18 +8,21 @@ const MIXES = [
     title: 'Tirries Tuesday - Old Skool Edition',
     subtitle: 'Live at Java Blue Lounge, ft. MC Pin',
     src: '/videos/mix-1-tirries-tuesday.mp4',
+    poster: '/images/mix-1-tirries-tuesday-poster.jpg',
     youtube: 'https://youtu.be/ZrTikLIp330',
   },
   {
     title: 'Soniq EP 5',
     subtitle: 'Studio mix',
     src: '/videos/mix-2-soniq-ep5.mp4',
+    poster: '/images/mix-2-soniq-ep5-poster.jpg',
     youtube: 'https://youtu.be/8bvNFhjdlX8',
   },
   {
     title: 'Soniq at Java B',
     subtitle: 'Live at Java Blue Lounge',
     src: '/videos/mix-3-soniq-java-b.mp4',
+    poster: '/images/mix-3-soniq-java-b-poster.jpg',
     youtube: 'https://youtu.be/0A4f-Q4EFDs',
   },
 ]
@@ -164,8 +167,19 @@ function Waveform() {
   )
 }
 
-function MixCard({ title, subtitle, src, youtube }) {
+function MixCard({ title, subtitle, src, poster, youtube, isFocused }) {
   const videoRef = useRef(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (isFocused) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+      v.currentTime = 0
+    }
+  }, [isFocused])
 
   const handleEnter = () => {
     const v = videoRef.current
@@ -192,10 +206,11 @@ function MixCard({ title, subtitle, src, youtube }) {
       <video
         ref={videoRef}
         src={src}
+        poster={poster}
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover"
       />
 
@@ -261,7 +276,7 @@ function MixWheel({ mixes }) {
                   transform: `scale(${isFocused ? 1 : 0.82})`,
                 }}
               >
-                <MixCard {...mix} />
+                <MixCard {...mix} isFocused={isFocused} />
               </div>
             </div>
           )
