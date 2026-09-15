@@ -1,4 +1,4 @@
-﻿import { motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const NAME_PARTS = [
   { text: 'DJ', className: 'text-white' },
@@ -24,9 +24,9 @@ export default function Arrival() {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         poster="/images/arrival-poster.jpg"
-        className="absolute inset-0 w-full h-full object-cover"
+        className="absolute inset-0 w-full h-full object-contain md:object-cover"
       >
         <source src="/videos/intro-logo.mp4" type="video/mp4" />
       </video>
@@ -63,7 +63,7 @@ export default function Arrival() {
                     animate="visible"
                     variants={letterVariants}
                     className="inline-block"
-                >
+                  >
                     {char}
                   </motion.span>
                 )
