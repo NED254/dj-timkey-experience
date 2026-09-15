@@ -2,12 +2,6 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
 
-const SOCIALS = [
-  { label: 'Instagram', handle: '@dj_timkey', href: 'https://www.instagram.com/dj_timkey', Icon: FaInstagram },
-  { label: 'TikTok', handle: '@djtimkey', href: 'https://www.tiktok.com/@djtimkey', Icon: FaTiktok },
-  { label: 'Facebook', handle: 'Deejey Timkey', href: 'https://www.facebook.com/DeejeyTimkey', Icon: FaFacebook },
-]
-
 const PHOTOS = [
   { src: '/images/timkey-hero.jpg', caption: 'Live on stage', span: 'row-span-2' },
   { src: '/images/timkey-portrait.jpg', caption: 'Mr. Beatnician', span: '' },
@@ -26,6 +20,31 @@ const PHOTOS = [
   { src: '/images/gallery-11.jpg', caption: '', span: '' },
   { src: '/images/gallery-12.jpg', caption: '', span: '' },
   { src: '/images/gallery-13.jpg', caption: '', span: '' },
+]
+
+// To add a new shoot: paste the new object below with its date (YYYY-MM-DD).
+// The list automatically sorts newest-first and badges the latest one.
+const FEATURED_GALLERIES = [
+  {
+    title: 'Live at Java',
+    credit: 'Mastervisuals2.0',
+    date: '2026-09-11',
+    cover: 'https://images.pixieset.com/906862221/026554e4039b680b1a4e3a75cb99d6b8-cover.jpg',
+    href: 'https://mastervisuals20.pixieset.com/timkeyjava',
+  },
+  {
+    title: 'Every set tells a story',
+    credit: 'MASTERVISUALSKE',
+    date: '2026-09-04',
+    cover: 'https://images.pixieset.com/586800221/40a3214a43e67deaea312eb649864404-cover.jpg',
+    href: 'https://mastervisualske12.pixieset.com/deejaytimkey',
+  },
+].sort((a, b) => new Date(b.date) - new Date(a.date))
+
+const SOCIALS = [
+  { label: 'Instagram', handle: '@dj_timkey', href: 'https://www.instagram.com/dj_timkey', Icon: FaInstagram },
+  { label: 'TikTok', handle: '@djtimkey', href: 'https://www.tiktok.com/@djtimkey', Icon: FaTiktok },
+  { label: 'Facebook', handle: 'Deejey Timkey', href: 'https://www.facebook.com/DeejeyTimkey', Icon: FaFacebook },
 ]
 
 function GalleryTile({ src, caption, span, onOpen }) {
@@ -51,6 +70,48 @@ function GalleryTile({ src, caption, span, onOpen }) {
       )}
       <div className="absolute inset-0 border border-transparent group-hover:border-blue-500/50 transition-colors duration-500 pointer-events-none" />
     </motion.div>
+  )
+}
+
+function FeaturedGalleryCard({ title, credit, cover, href, isLatest }) {
+  return (
+    <motion.a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="group relative block overflow-hidden rounded-sm"
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.7 }}
+    >
+      <div className="relative aspect-[4/3]">
+        <img
+          src={cover}
+          alt={`${title} - photo gallery by ${credit}`}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
+        {isLatest && (
+          <span className="absolute top-4 right-4 flex items-center gap-1.5 bg-blue-600 text-white text-xs font-semibold uppercase tracking-wide px-3 py-1.5 rounded-full">
+            <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+            Latest Shoot
+          </span>
+        )}
+      </div>
+      <div className="absolute inset-x-0 bottom-0 p-6">
+        <span className="text-blue-400 text-xs uppercase tracking-[0.3em]">
+          Full Photo Gallery
+        </span>
+        <h3 className="text-white font-bold uppercase text-xl md:text-2xl leading-tight mt-2">
+          {title}
+        </h3>
+        <p className="text-zinc-400 text-sm mt-1">Shot by {credit}</p>
+        <span className="inline-flex items-center gap-2 mt-4 text-white text-sm font-semibold uppercase tracking-wide border-b border-blue-500 pb-1 group-hover:text-blue-400 group-hover:border-blue-400 transition-colors">
+          View the full gallery
+        </span>
+      </div>
+    </motion.a>
   )
 }
 
@@ -130,7 +191,7 @@ export default function Gallery() {
     <section id="gallery" className="relative bg-black py-24 md:py-36 px-8 md:px-16">
       <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
       <div className="max-w-6xl mx-auto">
-                <motion.h2
+        <motion.h2
           className="text-white font-bold uppercase text-4xl md:text-6xl leading-[0.95] mb-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -150,14 +211,20 @@ export default function Gallery() {
           and brand activations.
         </motion.p>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px]">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px] mb-14">
           {PHOTOS.map((photo, i) => (
             <GalleryTile key={photo.src} {...photo} onOpen={() => openAt(i)} />
           ))}
         </div>
 
+        <div className="grid md:grid-cols-2 gap-6 mb-10">
+          {FEATURED_GALLERIES.map((gallery, i) => (
+            <FeaturedGalleryCard key={gallery.href} {...gallery} isLatest={i === 0} />
+          ))}
+        </div>
+
         <motion.div
-          className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-zinc-800 pt-10"
+          className="flex flex-wrap items-center justify-between gap-6 border-t border-zinc-800 pt-10"
           initial={{ opacity: 0, y: 16 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

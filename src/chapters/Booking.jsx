@@ -216,6 +216,7 @@ export default function Booking() {
                 >
                   <option>Club / Nightlife</option>
                   <option>Corporate Event</option>
+                  <option>Wedding</option>
                   <option>Campus / Student Event</option>
                   <option>Other</option>
                 </select>
@@ -300,4 +301,5 @@ export default function Booking() {
     </section>
   )
 }
+
 
