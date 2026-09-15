@@ -1,5 +1,5 @@
 ﻿import { useRef, useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
 
 const GENRES = ['Afrobeats', 'Amapiano', 'Gengetone', 'Afro House', 'Hip-Hop', 'Dancehall']
 
@@ -71,7 +71,7 @@ const AMBIENT_STARS = Array.from({ length: 50 }, (_, i) => {
   }
 })
 
-function SoundBackground() {
+function SoundBackground({ isInView }) {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <video
@@ -82,9 +82,8 @@ function SoundBackground() {
         preload="auto"
         poster="/images/sound-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover opacity-70"
-      >
-        <source src="/videos/sound-bg.mp4" type="video/mp4" />
-      </video>
+        src={isInView ? "/videos/sound-bg.mp4" : undefined}
+      />
 
       <div className="absolute inset-0 bg-gradient-to-b from-[#030308]/60 via-zinc-950/50 to-zinc-950/90" />
 
@@ -286,10 +285,13 @@ function MixWheel({ mixes }) {
 }
 
 export default function Sound() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
+
   return (
-    <section id="sound" className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
+    <section ref={sectionRef} id="sound" className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
-      <SoundBackground />
+      <SoundBackground isInView={isInView} />
 
       <div className="relative max-w-6xl mx-auto">
                 <motion.h2

@@ -1,4 +1,5 @@
-﻿import { motion } from 'framer-motion'
+﻿import { useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 
 const BIO_LINES = [
   "Timkey reads a room and keeps it moving - that's the reputation behind the Mr. Beatnician tag.",
@@ -17,8 +18,11 @@ const lineVariants = {
 }
 
 export default function MeetTheBeatnician() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
+
   return (
-    <section className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
+    <section ref={sectionRef} className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
       {/* Ambient video background */}
       <video
@@ -30,9 +34,8 @@ export default function MeetTheBeatnician() {
         poster="/images/timkey-portrait.jpg"
         onError={(e) => console.error('Video failed to load:', e)}
         className="absolute inset-0 w-full h-full object-cover z-0"
-      >
-        <source src="/videos/beatnician-bg.mp4" type="video/mp4" />
-      </video>
+        src={isInView ? '/videos/beatnician-bg.mp4' : undefined}
+      />
 
       {/* Cinematic gradient instead of a flat dark box - keeps video visible while protecting text */}
       <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/40" />

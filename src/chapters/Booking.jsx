@@ -1,5 +1,5 @@
-﻿import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+﻿import { useState, useEffect, useRef } from 'react'
+import { motion, useInView } from 'framer-motion'
 import { FaWhatsapp, FaEnvelope, FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
 
 const CONTACT_LINKS = [
@@ -52,6 +52,8 @@ function StatusPill() {
 }
 
 export default function Booking() {
+  const sectionRef = useRef(null)
+  const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
   const [status, setStatus] = useState('idle')
   const whatsappHref = 'https://wa.me/254790817087?text=' + encodeURIComponent("Hi Timkey, I'd like to book you for an event.")
 
@@ -78,7 +80,7 @@ export default function Booking() {
   }
 
   return (
-    <section id="booking" className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
+    <section ref={sectionRef} id="booking" className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <video
@@ -89,9 +91,8 @@ export default function Booking() {
             preload="auto"
             poster="/images/booking-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src="/videos/booking-bg.mp4" type="video/mp4" />
-          </video>
+            src={isInView ? "/videos/booking-bg.mp4" : undefined}
+          />
           <div className="absolute inset-0 bg-gradient-to-b from-[#041220]/70 via-[#00060d]/55 to-black/85" />
 
           <div
