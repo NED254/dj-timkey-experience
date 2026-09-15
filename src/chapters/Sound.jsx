@@ -79,6 +79,7 @@ function SoundBackground() {
         loop
         muted
         playsInline
+        preload="auto"
         className="absolute inset-0 w-full h-full object-cover opacity-70"
       >
         <source src="/videos/sound-bg.mp4" type="video/mp4" />

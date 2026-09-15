@@ -26,6 +26,7 @@ export default function MeetTheBeatnician() {
         loop
         muted
         playsInline
+        preload="auto"
         poster="/images/timkey-portrait.jpg"
         onError={(e) => console.error('Video failed to load:', e)}
         className="absolute inset-0 w-full h-full object-cover z-0"
