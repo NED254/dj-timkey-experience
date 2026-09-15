@@ -1,11 +1,23 @@
+import LoadingScreen from './components/LoadingScreen'
+import Navbar from './components/Navbar'
 import Arrival from './chapters/Arrival'
 import MeetTheBeatnician from './chapters/MeetTheBeatnician'
+import Moments from './chapters/Moments'
+import Sound from './chapters/Sound'
+import Gallery from './chapters/Gallery'
+import Booking from './chapters/Booking'
 
 function App() {
   return (
     <div className="bg-black text-white">
+      <LoadingScreen />
+      <Navbar />
       <Arrival />
       <MeetTheBeatnician />
+      <Moments />
+      <Sound />
+      <Gallery />
+      <Booking />
     </div>
   )
 }

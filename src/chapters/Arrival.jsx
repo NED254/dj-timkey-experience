@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+﻿import { motion } from 'framer-motion'
 
 const NAME_PARTS = [
   { text: 'DJ', className: 'text-white' },
@@ -19,15 +19,15 @@ export default function Arrival() {
 
   return (
     <section className="relative min-h-screen w-full overflow-hidden flex items-end bg-black">
-      <motion.img
-        src="/images/timkey-club.jpg"
-        alt="DJ Timkey performing"
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        style={{ objectPosition: '65% 15%' }}
-        initial={{ scale: 1 }}
-        animate={{ scale: 1.1 }}
-        transition={{ duration: 20, ease: 'linear' }}
-      />
+      >
+        <source src="/videos/intro-logo.mp4" type="video/mp4" />
+      </video>
       <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
       <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-transparent to-black/30" />
 

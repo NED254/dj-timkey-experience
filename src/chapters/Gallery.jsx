@@ -1,0 +1,200 @@
+﻿import { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
+
+const SOCIALS = [
+  { label: 'Instagram', handle: '@dj_timkey', href: 'https://www.instagram.com/dj_timkey', Icon: FaInstagram },
+  { label: 'TikTok', handle: '@djtimkey', href: 'https://www.tiktok.com/@djtimkey', Icon: FaTiktok },
+  { label: 'Facebook', handle: 'Deejey Timkey', href: 'https://www.facebook.com/DeejeyTimkey', Icon: FaFacebook },
+]
+
+const PHOTOS = [
+  { src: '/images/timkey-hero.jpg', caption: 'Live on stage', span: 'row-span-2' },
+  { src: '/images/timkey-portrait.jpg', caption: 'Mr. Beatnician', span: '' },
+  { src: '/images/timkey-club.jpg', caption: 'On the decks', span: '' },
+  { src: '/images/timkey-martos-lounge.jpg', caption: "DJ Timkey @ Marto's Lounge", span: 'row-span-2' },
+  { src: '/images/gallery-1.jpg', caption: '', span: '' },
+  { src: '/images/gallery-2.jpg', caption: '', span: '' },
+  { src: '/images/gallery-3.jpg', caption: '', span: '' },
+  { src: '/images/gallery-4.jpg', caption: '', span: '' },
+  { src: '/images/gallery-5.jpg', caption: '', span: '' },
+  { src: '/images/gallery-6.jpg', caption: '', span: '' },
+  { src: '/images/gallery-7.jpg', caption: '', span: '' },
+  { src: '/images/gallery-8.jpg', caption: '', span: '' },
+  { src: '/images/gallery-9.jpg', caption: '', span: '' },
+  { src: '/images/gallery-10.jpg', caption: '', span: '' },
+  { src: '/images/gallery-11.jpg', caption: '', span: '' },
+  { src: '/images/gallery-12.jpg', caption: '', span: '' },
+  { src: '/images/gallery-13.jpg', caption: '', span: '' },
+]
+
+function GalleryTile({ src, caption, span, onOpen }) {
+  return (
+    <motion.div
+      className={`group relative overflow-hidden rounded-sm cursor-pointer ${span}`}
+      initial={{ opacity: 0, y: 24 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.2 }}
+      transition={{ duration: 0.6 }}
+      onClick={onOpen}
+    >
+      <img
+        src={src}
+        alt={caption || 'DJ Timkey'}
+        className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/0 to-black/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+      {caption && (
+        <div className="absolute inset-x-0 bottom-0 p-4 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+          <p className="text-white text-sm font-semibold uppercase tracking-wide">{caption}</p>
+        </div>
+      )}
+      <div className="absolute inset-0 border border-transparent group-hover:border-blue-500/50 transition-colors duration-500 pointer-events-none" />
+    </motion.div>
+  )
+}
+
+function Lightbox({ photo, onClose, onPrev, onNext }) {
+  return (
+    <AnimatePresence>
+      {photo && (
+        <motion.div
+          className="fixed inset-0 z-[90] bg-black/95 backdrop-blur-sm flex items-center justify-center px-6 py-10"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          onClick={onClose}
+        >
+          <button
+            className="absolute top-6 right-6 text-white/70 hover:text-white text-3xl leading-none"
+            onClick={onClose}
+            aria-label="Close"
+          >
+            &times;
+          </button>
+
+          <button
+            className="absolute left-4 md:left-8 text-white/60 hover:text-white text-4xl leading-none px-2"
+            onClick={(e) => {
+              e.stopPropagation()
+              onPrev()
+            }}
+            aria-label="Previous"
+          >
+            &#8249;
+          </button>
+
+          <motion.img
+            key={photo.src}
+            src={photo.src}
+            alt={photo.caption || 'DJ Timkey'}
+            className="max-h-[85vh] max-w-[85vw] object-contain rounded-sm shadow-2xl"
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.3 }}
+            onClick={(e) => e.stopPropagation()}
+          />
+
+          <button
+            className="absolute right-4 md:right-8 text-white/60 hover:text-white text-4xl leading-none px-2"
+            onClick={(e) => {
+              e.stopPropagation()
+              onNext()
+            }}
+            aria-label="Next"
+          >
+            &#8250;
+          </button>
+
+          {photo.caption && (
+            <p className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-300 text-sm uppercase tracking-widest">
+              {photo.caption}
+            </p>
+          )}
+        </motion.div>
+      )}
+    </AnimatePresence>
+  )
+}
+
+export default function Gallery() {
+  const [activeIndex, setActiveIndex] = useState(null)
+
+  const openAt = (i) => setActiveIndex(i)
+  const close = () => setActiveIndex(null)
+  const prev = () => setActiveIndex((i) => (i - 1 + PHOTOS.length) % PHOTOS.length)
+  const next = () => setActiveIndex((i) => (i + 1) % PHOTOS.length)
+
+  return (
+    <section id="gallery" className="relative bg-black py-24 md:py-36 px-8 md:px-16">
+      <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
+      <div className="max-w-6xl mx-auto">
+                <motion.h2
+          className="text-white font-bold uppercase text-4xl md:text-6xl leading-[0.95] mb-4"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          Gallery
+        </motion.h2>
+        <motion.p
+          className="text-zinc-400 text-lg max-w-xl mb-16"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7, delay: 0.1 }}
+        >
+          Moments that speak louder than words - a look at Timkey in action across clubs, campuses,
+          and brand activations.
+        </motion.p>
+
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px]">
+          {PHOTOS.map((photo, i) => (
+            <GalleryTile key={photo.src} {...photo} onOpen={() => openAt(i)} />
+          ))}
+        </div>
+
+        <motion.div
+          className="mt-16 flex flex-wrap items-center justify-between gap-6 border-t border-zinc-800 pt-10"
+          initial={{ opacity: 0, y: 16 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="text-zinc-400 text-base max-w-sm">
+            This is just a glimpse - follow along for the full story, or bring Timkey to your next event.
+          </p>
+          <div className="flex flex-wrap gap-3">
+            {SOCIALS.map(({ label, handle, href, Icon }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-5 py-3 border border-zinc-700 text-white rounded-sm hover:border-blue-500/50 hover:bg-blue-500/5 transition-colors"
+              >
+                <Icon className="text-lg" />
+                <span className="font-semibold text-sm">{handle}</span>
+              </a>
+            ))}
+            <a
+              href="#booking"
+              className="px-6 py-3 bg-blue-600 hover:bg-blue-500 text-white font-semibold rounded-sm transition-colors"
+            >
+              Book Timkey
+            </a>
+          </div>
+        </motion.div>
+      </div>
+
+      <Lightbox
+        photo={activeIndex !== null ? PHOTOS[activeIndex] : null}
+        onClose={close}
+        onPrev={prev}
+        onNext={next}
+      />
+    </section>
+  )
+}
