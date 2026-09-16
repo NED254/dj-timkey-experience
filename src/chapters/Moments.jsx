@@ -117,6 +117,9 @@ export default function Moments() {
   const goNext = () => {
     setActiveIndex((prev) => (prev + 1) % MOMENTS.length)
   }
+  const goPrev = () => {
+    setActiveIndex((prev) => (prev - 1 + MOMENTS.length) % MOMENTS.length)
+  }
 
   return (
     <section id="moments" className="relative bg-black py-24 md:py-36 overflow-hidden">
@@ -135,7 +138,20 @@ export default function Moments() {
         </motion.h2>
       </div>
 
-      <div className="relative h-[650px] w-full" style={{ perspective: '1600px' }}>
+      <motion.div
+        className="relative h-[650px] w-full cursor-grab active:cursor-grabbing"
+        style={{ perspective: '1600px' }}
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.2}
+        onDragEnd={(e, info) => {
+          if (info.offset.x < -80 || info.velocity.x < -400) {
+            goNext()
+          } else if (info.offset.x > 80 || info.velocity.x > 400) {
+            goPrev()
+          }
+        }}
+      >
         {MOMENTS.map((moment, i) => (
           <PhoneCard
             key={moment.label}
@@ -143,10 +159,9 @@ export default function Moments() {
             src={moment.src}
             poster={moment.poster}
             offset={i - activeIndex}
-            onEnded={goNext}
           />
         ))}
-      </div>
+      </motion.div>
 
       <div className="relative flex justify-center gap-2 mt-10">
         {MOMENTS.map((moment, i) => (

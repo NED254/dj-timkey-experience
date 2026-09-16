@@ -1,5 +1,6 @@
-import LoadingScreen from './components/LoadingScreen'
+﻿import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
+import ChapterErrorBoundary from './components/ChapterErrorBoundary'
 import Arrival from './chapters/Arrival'
 import MeetTheBeatnician from './chapters/MeetTheBeatnician'
 import Moments from './chapters/Moments'
@@ -12,12 +13,12 @@ function App() {
     <div className="bg-black text-white">
       <LoadingScreen />
       <Navbar />
-      <Arrival />
-      <MeetTheBeatnician />
-      <Moments />
-      <Sound />
-      <Gallery />
-      <Booking />
+      <ChapterErrorBoundary><Arrival /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><MeetTheBeatnician /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Moments /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Sound /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Gallery /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
     </div>
   )
 }

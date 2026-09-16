@@ -243,16 +243,21 @@ const WHEEL_RADIUS = 900
 function MixWheel({ mixes }) {
   const [focused, setFocused] = useState(0)
 
-  useEffect(() => {
-    const id = setInterval(() => {
-      setFocused((f) => (f + 1) % mixes.length)
-    }, 4000)
-    return () => clearInterval(id)
-  }, [mixes.length])
-
   return (
     <div className="relative">
-      <div className="relative h-[400px] md:h-[460px] overflow-hidden flex justify-center">
+      <motion.div
+        className="relative h-[400px] md:h-[460px] overflow-hidden flex justify-center cursor-grab active:cursor-grabbing"
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={0.15}
+        onDragEnd={(e, info) => {
+          if (info.offset.x < -60 || info.velocity.x < -300) {
+            setFocused((f) => (f + 1) % mixes.length)
+          } else if (info.offset.x > 60 || info.velocity.x > 300) {
+            setFocused((f) => (f - 1 + mixes.length) % mixes.length)
+          }
+        }}
+      >
         {mixes.map((mix, i) => {
           const angle = (i - focused) * WHEEL_STEP
           const isFocused = i === focused
@@ -281,7 +286,7 @@ function MixWheel({ mixes }) {
             </div>
           )
         })}
-      </div>
+      </motion.div>
 
       <div className="flex items-center justify-center gap-3 mt-6">
         {mixes.map((mix, i) => (
