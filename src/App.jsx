@@ -1,6 +1,7 @@
 ﻿import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import ChapterErrorBoundary from './components/ChapterErrorBoundary'
+import FloatingWhatsApp from './components/FloatingWhatsApp'
 import Arrival from './chapters/Arrival'
 import MeetTheBeatnician from './chapters/MeetTheBeatnician'
 import Moments from './chapters/Moments'
@@ -19,6 +20,7 @@ function App() {
       <ChapterErrorBoundary><Sound /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Gallery /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
+      <FloatingWhatsApp />
     </div>
   )
 }
