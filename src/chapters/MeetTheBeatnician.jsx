@@ -132,7 +132,7 @@ export default function MeetTheBeatnician() {
               <p className="text-zinc-400 text-xs uppercase tracking-widest mt-1">Genres Mastered</p>
             </div>
             <div>
-              <p className="text-white text-2xl md:text-3xl font-bold">3+</p>
+              <p className="text-white text-2xl md:text-3xl font-bold">5+</p>
               <p className="text-zinc-400 text-xs uppercase tracking-widest mt-1">Years Active</p>
             </div>
           </motion.div>
