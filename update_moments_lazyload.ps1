@@ -1,4 +1,7 @@
-﻿import { useEffect, useRef, useState } from 'react'
+# Run from inside dj-timkey-experience\
+
+@'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const MOMENTS = [
@@ -181,3 +184,7 @@ export default function Moments() {
     </section>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Moments.jsx" -Encoding UTF8
+
+Write-Host "Moments.jsx updated with visibility-gated video loading." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
