@@ -54,13 +54,24 @@ function PhoneCard({ label, src, poster, offset, onEnded, isSectionInView }) {
   const opacity = Math.abs(offset) > 2 ? 0 : isCenter ? 1 : 0.65
 
   useEffect(() => {
-    const video = videoRef.current
-    if (!video || !isSectionInView) return
-    if (isCenter) {
-      video.currentTime = 0
-      video.play().catch(() => {})
+    const v = videoRef.current
+    if (!v || !isSectionInView) return
+
+    if (!isCenter) {
+      v.pause()
+      return
+    }
+
+    const tryPlay = () => {
+      v.currentTime = 0
+      v.play().catch(() => {})
+    }
+
+    if (v.readyState >= 3) {
+      tryPlay()
     } else {
-      video.pause()
+      v.addEventListener('canplay', tryPlay, { once: true })
+      return () => v.removeEventListener('canplay', tryPlay)
     }
   }, [isCenter, isSectionInView])
 
@@ -94,6 +105,7 @@ function PhoneCard({ label, src, poster, offset, onEnded, isSectionInView }) {
         <video
           ref={videoRef}
           src={isSectionInView ? src : undefined}
+          autoPlay
           muted
           playsInline
           poster={poster}
