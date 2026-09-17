@@ -1,12 +1,12 @@
-﻿import { useEffect, useState } from 'react'
-import { motion } from 'framer-motion'
+﻿import { useEffect, useState } from "react"
+import { motion } from "framer-motion"
 
 export default function Events() {
   const [events, setEvents] = useState([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch('/api/events')
+    fetch("/api/events")
       .then((r) => r.json())
       .then((data) => setEvents(data.events || []))
       .catch(() => setEvents([]))
@@ -40,8 +40,13 @@ export default function Events() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.05 }}
-                className="grid grid-cols-1 md:grid-cols-[110px_1fr_auto] gap-2 md:gap-6 items-baseline py-6 border-b border-zinc-800"
+                className="grid grid-cols-1 md:grid-cols-[64px_110px_1fr_auto] gap-3 md:gap-6 items-center py-6 border-b border-zinc-800"
               >
+                {ev.image ? (
+                  <img src={ev.image} alt={ev.venue} className="w-16 h-16 object-cover rounded-sm border border-zinc-700" />
+                ) : (
+                  <div className="w-16 h-16 hidden md:block" />
+                )}
                 <span className="text-white font-bold text-lg uppercase">{ev.date}</span>
                 <span>
                   <span className="text-white font-semibold">{ev.venue}</span>
