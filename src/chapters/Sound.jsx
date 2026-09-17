@@ -74,7 +74,18 @@ const AMBIENT_STARS = Array.from({ length: 50 }, (_, i) => {
   }
 })
 
-function SoundBackground({ isInView }) {
+function SoundBackground({ isInView, isVisible }) {
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (isVisible) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [isVisible])
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
       <video
@@ -85,6 +96,7 @@ function SoundBackground({ isInView }) {
         preload="auto"
         poster="/images/sound-poster.jpg"
         className="absolute inset-0 w-full h-full object-cover opacity-70"
+        ref={videoRef}
         src={isInView ? "/videos/sound-bg.mp4" : undefined}
       />
 
@@ -307,11 +319,12 @@ function MixWheel({ mixes }) {
 export default function Sound() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
+  const isVisible = useInView(sectionRef, { margin: '200px 0px' })
 
   return (
     <section ref={sectionRef} id="sound" className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
       <div className="absolute inset-x-0 top-0 h-40 md:h-56 bg-gradient-to-b from-black to-transparent z-[5] pointer-events-none" />
-      <SoundBackground isInView={isInView} />
+      <SoundBackground isInView={isInView} isVisible={isVisible} />
 
       <div className="relative max-w-6xl mx-auto">
                 <motion.h2

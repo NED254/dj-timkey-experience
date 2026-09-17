@@ -1,4 +1,5 @@
-import { motion } from 'framer-motion'
+﻿import { useRef, useEffect } from 'react'
+import { motion, useInView } from 'framer-motion'
 
 const NAME_PARTS = [
   { text: 'DJ', className: 'text-white' },
@@ -16,14 +17,28 @@ const letterVariants = {
 
 export default function Arrival() {
   let letterIndex = 0
+  const sectionRef = useRef(null)
+  const videoRef = useRef(null)
+  const isInView = useInView(sectionRef, { margin: '200px 0px' })
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (isInView) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [isInView])
 
   return (
-    <section className="relative min-h-screen w-full overflow-hidden flex items-end bg-black">
+    <section ref={sectionRef} className="relative min-h-screen w-full overflow-hidden flex items-end bg-black">
       <video
         autoPlay
         loop
         muted
         playsInline
+        ref={videoRef}
         preload="metadata"
         poster="/images/arrival-poster.jpg"
         className="absolute inset-0 w-full h-full object-contain md:object-cover"

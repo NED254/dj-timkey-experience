@@ -1,4 +1,4 @@
-﻿import { useRef } from 'react'
+﻿import { useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const BIO_LINES = [
@@ -20,6 +20,18 @@ const lineVariants = {
 export default function MeetTheBeatnician() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
+  const isVisible = useInView(sectionRef, { margin: '200px 0px' })
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (isVisible) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [isVisible])
 
   return (
     <section id="about" ref={sectionRef} className="relative bg-black py-24 md:py-36 px-8 md:px-16 overflow-hidden">
@@ -33,6 +45,7 @@ export default function MeetTheBeatnician() {
         poster="/images/timkey-portrait.jpg"
         onError={(e) => console.error('Video failed to load:', e)}
         className="absolute inset-0 w-full h-full object-cover z-0"
+        ref={videoRef}
         src={isInView ? '/videos/beatnician-bg.mp4' : undefined}
       />
 

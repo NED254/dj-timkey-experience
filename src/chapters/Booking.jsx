@@ -54,6 +54,18 @@ function StatusPill() {
 export default function Booking() {
   const sectionRef = useRef(null)
   const isInView = useInView(sectionRef, { once: true, margin: '200px 0px' })
+  const isVisible = useInView(sectionRef, { margin: '200px 0px' })
+  const videoRef = useRef(null)
+
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    if (isVisible) {
+      v.play().catch(() => {})
+    } else {
+      v.pause()
+    }
+  }, [isVisible])
   const [status, setStatus] = useState('idle')
   const whatsappHref = 'https://wa.me/254790817087?text=' + encodeURIComponent("Hi Timkey, I'd like to book you for an event.")
 
@@ -91,6 +103,7 @@ export default function Booking() {
             preload="auto"
             poster="/images/booking-poster.jpg"
             className="absolute inset-0 w-full h-full object-cover"
+            ref={videoRef}
             src={isInView ? "/videos/booking-bg.mp4" : undefined}
           />
           <div className="absolute inset-0 bg-gradient-to-b from-[#041220]/70 via-[#00060d]/55 to-black/85" />
