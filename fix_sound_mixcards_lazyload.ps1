@@ -1,4 +1,7 @@
-﻿import { useRef, useState, useEffect } from 'react'
+# Run from inside dj-timkey-experience\
+
+@'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const GENRES = ['Afrobeats', 'Amapiano', 'Gengetone', 'Afro House', 'Hip-Hop', 'Dancehall']
@@ -350,3 +353,7 @@ export default function Sound() {
     </section>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Sound.jsx" -Encoding UTF8
+
+Write-Host "Sound.jsx updated: mix preview videos now gated behind section visibility." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
