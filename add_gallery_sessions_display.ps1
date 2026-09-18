@@ -1,4 +1,7 @@
-﻿import { useEffect, useState } from 'react'
+# Run from inside dj-timkey-experience\
+
+@'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
 
@@ -427,3 +430,7 @@ export default function Gallery() {
     </section>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Gallery.jsx" -Encoding UTF8
+
+Write-Host "Gallery.jsx updated with Latest Sessions (photos + 30s clips), tap-to-enlarge for both." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan

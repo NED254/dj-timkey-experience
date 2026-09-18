@@ -1,4 +1,38 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+# ---------- api/gallery.js ----------
+@'
+import { kv } from "@vercel/kv";
+
+export default async function handler(req, res) {
+  if (req.method === "GET") {
+    const gallery = (await kv.get("gallery")) || { photoSessions: [], videoSessions: [] };
+    return res.status(200).json(gallery);
+  }
+
+  if (req.method === "POST") {
+    const { password, photoSessions, videoSessions } = req.body || {};
+
+    if (!password || password !== process.env.ADMIN_PASSWORD) {
+      return res.status(401).json({ error: "Invalid password" });
+    }
+
+    if (!Array.isArray(photoSessions) || !Array.isArray(videoSessions)) {
+      return res.status(400).json({ error: "photoSessions and videoSessions must be arrays" });
+    }
+
+    await kv.set("gallery", { photoSessions, videoSessions });
+    return res.status(200).json({ success: true });
+  }
+
+  res.setHeader("Allow", ["GET", "POST"]);
+  return res.status(405).json({ error: `Method ${req.method} not allowed` });
+}
+'@ | Set-Content -Path ".\api\gallery.js" -Encoding UTF8
+
+# ---------- src/pages/Admin.jsx ----------
+@'
+import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
 
 const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
@@ -369,3 +403,7 @@ export default function Admin() {
     </div>
   )
 }
+'@ | Set-Content -Path ".\src\pages\Admin.jsx" -Encoding UTF8
+
+Write-Host "Created api/gallery.js and rebuilt Admin.jsx with Events/Gallery tabs." -ForegroundColor Green
+Write-Host "Next: run the second script (public display) before building." -ForegroundColor Cyan
