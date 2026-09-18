@@ -1,4 +1,7 @@
-﻿import LoadingScreen from './components/LoadingScreen'
+# Run from inside dj-timkey-experience\
+
+@'
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import ChapterErrorBoundary from './components/ChapterErrorBoundary'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
@@ -38,3 +41,7 @@ function App() {
 }
 
 export default App
+'@ | Set-Content -Path ".\src\App.jsx" -Encoding UTF8
+
+Write-Host "App.jsx updated: FAQ moved to last, copyright footer added." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
