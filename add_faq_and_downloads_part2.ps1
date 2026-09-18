@@ -1,4 +1,8 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+# ---------- src/pages/Admin.jsx ----------
+@'
+import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
 
 const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
@@ -439,3 +443,7 @@ export default function Admin() {
     </div>
   )
 }
+'@ | Set-Content -Path ".\src\pages\Admin.jsx" -Encoding UTF8
+
+Write-Host "Admin.jsx updated with Downloads tab." -ForegroundColor Green
+Write-Host "Next: run part 3 (Sound.jsx display + App.jsx wiring)" -ForegroundColor Cyan

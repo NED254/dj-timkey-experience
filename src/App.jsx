@@ -8,6 +8,7 @@ import Moments from './chapters/Moments'
 import Sound from './chapters/Sound'
 import Events from './chapters/Events'
 import Gallery from './chapters/Gallery'
+import FAQ from './chapters/FAQ'
 import Booking from './chapters/Booking'
 import Admin from './pages/Admin'
 
@@ -26,6 +27,7 @@ function App() {
       <ChapterErrorBoundary><Sound /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Events /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Gallery /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
       <FloatingWhatsApp />
     </div>
