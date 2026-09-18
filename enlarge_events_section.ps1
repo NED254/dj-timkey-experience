@@ -1,4 +1,7 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+@'
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function Events() {
@@ -125,3 +128,7 @@ export default function Events() {
     </section>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Events.jsx" -Encoding UTF8
+
+Write-Host "Events.jsx redesigned: larger card layout, bigger photo, bigger date/venue text, bigger CTA button." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
