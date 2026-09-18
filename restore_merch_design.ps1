@@ -1,4 +1,8 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+# ---------- src/chapters/Merch.jsx (restoring + fixing their design) ----------
+@'
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 function MerchCard({ name, price, image, link }) {
@@ -107,3 +111,7 @@ export default function Merch() {
     </section>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Merch.jsx" -Encoding UTF8
+
+Write-Host "Merch.jsx restored to their design (with the missing <a> tags fixed)." -ForegroundColor Green
+Write-Host "Next: run the second script to adjust the admin price field wording to match." -ForegroundColor Cyan

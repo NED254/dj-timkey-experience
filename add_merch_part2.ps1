@@ -1,3 +1,7 @@
+# Run from inside dj-timkey-experience\
+
+# ---------- src/pages/Admin.jsx ----------
+@'
 import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
 
@@ -481,7 +485,7 @@ function MerchManager({ password }) {
         <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-sm p-5 flex flex-col gap-3">
           <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-center">
             <input placeholder="Item name (e.g. DJ TIMKEY Tee)" value={m.name} onChange={(e) => update(i, "name", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
-            <input placeholder="Price in KES, numbers only (e.g. 1500)" value={m.price} onChange={(e) => update(i, "price", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
+            <input placeholder="Price (e.g. KES 1,500)" value={m.price} onChange={(e) => update(i, "price", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
             <button onClick={() => remove(i)} className="text-red-400 hover:text-red-300 text-sm font-semibold px-3 py-2">Remove</button>
           </div>
           <input placeholder="Order link (WhatsApp, store link, etc.)" value={m.link} onChange={(e) => update(i, "link", e.target.value)} className="w-full bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
@@ -536,3 +540,53 @@ export default function Admin() {
     </div>
   )
 }
+'@ | Set-Content -Path ".\src\pages\Admin.jsx" -Encoding UTF8
+
+# ---------- src/App.jsx ----------
+@'
+import LoadingScreen from './components/LoadingScreen'
+import Navbar from './components/Navbar'
+import ChapterErrorBoundary from './components/ChapterErrorBoundary'
+import FloatingWhatsApp from './components/FloatingWhatsApp'
+import Arrival from './chapters/Arrival'
+import MeetTheBeatnician from './chapters/MeetTheBeatnician'
+import Moments from './chapters/Moments'
+import Sound from './chapters/Sound'
+import Events from './chapters/Events'
+import Gallery from './chapters/Gallery'
+import Merch from './chapters/Merch'
+import Booking from './chapters/Booking'
+import FAQ from './chapters/FAQ'
+import Admin from './pages/Admin'
+
+function App() {
+  if (typeof window !== 'undefined' && window.location.pathname === '/admin') {
+    return <Admin />
+  }
+
+  return (
+    <div className="bg-black text-white">
+      <LoadingScreen />
+      <Navbar />
+      <ChapterErrorBoundary><Arrival /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><MeetTheBeatnician /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Moments /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Sound /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Events /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Gallery /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Merch /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
+      <FloatingWhatsApp />
+      <footer className="bg-black border-t border-zinc-800 py-8 px-8 md:px-16 text-center">
+        <p className="text-zinc-500 text-sm">&copy; 2026 DJ Timkey. All rights reserved.</p>
+      </footer>
+    </div>
+  )
+}
+
+export default App
+'@ | Set-Content -Path ".\src\App.jsx" -Encoding UTF8
+
+Write-Host "Admin.jsx updated with Merch tab; Merch chapter wired into App.jsx." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan

@@ -8,6 +8,7 @@ import Moments from './chapters/Moments'
 import Sound from './chapters/Sound'
 import Events from './chapters/Events'
 import Gallery from './chapters/Gallery'
+import Merch from './chapters/Merch'
 import Booking from './chapters/Booking'
 import FAQ from './chapters/FAQ'
 import Admin from './pages/Admin'
@@ -27,6 +28,7 @@ function App() {
       <ChapterErrorBoundary><Sound /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Events /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Gallery /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Merch /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
       <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
       <FloatingWhatsApp />
