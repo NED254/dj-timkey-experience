@@ -29,7 +29,7 @@ export default function Navbar() {
 
   return (
     <motion.nav
-      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4"
+      className="fixed top-9 left-0 right-0 z-50 flex items-center justify-between px-6 md:px-10 py-4"
       animate={{ y: hidden ? '-110%' : '0%' }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
     >

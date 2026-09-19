@@ -1,4 +1,4 @@
-﻿import LoadingScreen from './components/LoadingScreen'
+import LoadingScreen from './components/LoadingScreen'
 import Navbar from './components/Navbar'
 import ChapterErrorBoundary from './components/ChapterErrorBoundary'
 import FloatingWhatsApp from './components/FloatingWhatsApp'
@@ -23,6 +23,7 @@ function App() {
     <div className="bg-black text-white">
       <LoadingScreen />
       <Navbar />
+      <Ads />
       <ChapterErrorBoundary><Arrival /></ChapterErrorBoundary>
       <ChapterErrorBoundary><MeetTheBeatnician /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Moments /></ChapterErrorBoundary>
@@ -32,7 +33,6 @@ function App() {
       <ChapterErrorBoundary><Merch /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
       <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
-      <ChapterErrorBoundary><Ads /></ChapterErrorBoundary>
       <FloatingWhatsApp />
       <footer className="bg-black border-t border-zinc-800 py-8 px-8 md:px-16 text-center">
         <p className="text-zinc-500 text-sm">&copy; 2026 DJ Timkey. All rights reserved.</p>
