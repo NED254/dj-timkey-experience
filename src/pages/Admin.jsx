@@ -64,7 +64,6 @@ async function uploadImage(file, password, onProgress) {
     access: "public",
     handleUploadUrl: "/api/upload",
     clientPayload: JSON.stringify({ password }),
-    addRandomSuffix: true,
     onUploadProgress: (p) => onProgress(Math.round(p.percentage)),
   })
 }
@@ -74,7 +73,6 @@ async function uploadVideo(file, password, onProgress) {
     access: "public",
     handleUploadUrl: "/api/upload",
     clientPayload: JSON.stringify({ password }),
-    addRandomSuffix: true,
     onUploadProgress: (p) => onProgress(Math.round(p.percentage)),
   })
 }
