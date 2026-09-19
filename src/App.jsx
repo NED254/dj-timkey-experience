@@ -11,6 +11,7 @@ import Gallery from './chapters/Gallery'
 import Merch from './chapters/Merch'
 import Booking from './chapters/Booking'
 import FAQ from './chapters/FAQ'
+import Ads from './chapters/Ads'
 import Admin from './pages/Admin'
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
       <ChapterErrorBoundary><Merch /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
       <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Ads /></ChapterErrorBoundary>
       <FloatingWhatsApp />
       <footer className="bg-black border-t border-zinc-800 py-8 px-8 md:px-16 text-center">
         <p className="text-zinc-500 text-sm">&copy; 2026 DJ Timkey. All rights reserved.</p>
