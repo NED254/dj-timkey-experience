@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
 
 const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
@@ -64,6 +64,7 @@ async function uploadImage(file, password, onProgress) {
     access: "public",
     handleUploadUrl: "/api/upload",
     clientPayload: JSON.stringify({ password }),
+    addRandomSuffix: true,
     onUploadProgress: (p) => onProgress(Math.round(p.percentage)),
   })
 }
@@ -73,6 +74,7 @@ async function uploadVideo(file, password, onProgress) {
     access: "public",
     handleUploadUrl: "/api/upload",
     clientPayload: JSON.stringify({ password }),
+    addRandomSuffix: true,
     onUploadProgress: (p) => onProgress(Math.round(p.percentage)),
   })
 }
