@@ -1,4 +1,7 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+@'
+import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
 
 const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
@@ -599,3 +602,7 @@ export default function Admin() {
     </div>
   )
 }
+'@ | Set-Content -Path ".\src\pages\Admin.jsx" -Encoding UTF8
+
+Write-Host "Admin.jsx updated: photo resizing (max 1920px, quality 0.85) + live upload percentage everywhere." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
