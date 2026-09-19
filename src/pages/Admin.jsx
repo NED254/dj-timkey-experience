@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react"
 import { upload } from "@vercel/blob/client"
+import { FFmpeg } from "@ffmpeg/ffmpeg"
+import { fetchFile, toBlobURL } from "@ffmpeg/util"
 
 const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
 const MAX_CLIP_SECONDS = 30
@@ -17,6 +19,35 @@ function getVideoDuration(file) {
     video.onerror = () => reject(new Error("Could not read video file"))
     video.src = URL.createObjectURL(file)
   })
+}
+
+let ffmpegInstance = null
+async function getFFmpeg(onLog) {
+  if (ffmpegInstance) return ffmpegInstance
+  const ffmpeg = new FFmpeg()
+  if (onLog) ffmpeg.on("log", ({ message }) => onLog(message))
+  const baseURL = "https://unpkg.com/@ffmpeg/core@0.12.6/dist/umd"
+  await ffmpeg.load({
+    coreURL: await toBlobURL(`${baseURL}/ffmpeg-core.js`, "text/javascript"),
+    wasmURL: await toBlobURL(`${baseURL}/ffmpeg-core.wasm`, "application/wasm"),
+  })
+  ffmpegInstance = ffmpeg
+  return ffmpeg
+}
+
+async function trimVideo(file, seconds, onStatus) {
+  onStatus("Loading trimmer...")
+  const ffmpeg = await getFFmpeg()
+  const ext = (file.name.match(/\.[^.]+$/) || [".mp4"])[0]
+  const inputName = "input" + ext
+  const outputName = "output.mp4"
+  onStatus("Trimming...")
+  await ffmpeg.writeFile(inputName, await fetchFile(file))
+  await ffmpeg.exec(["-i", inputName, "-t", String(seconds), "-c", "copy", outputName])
+  const data = await ffmpeg.readFile(outputName)
+  await ffmpeg.deleteFile(inputName)
+  await ffmpeg.deleteFile(outputName)
+  return new File([data.buffer], file.name.replace(/\.[^.]+$/, "") + "-trimmed.mp4", { type: "video/mp4" })
 }
 
 function resizeImage(file, maxDimension = MAX_IMAGE_DIMENSION, quality = IMAGE_QUALITY) {
@@ -257,6 +288,7 @@ function VideoSessionEditor({ session, onChange, onRemove, password }) {
   const [uploading, setUploading] = useState(false)
   const [progress, setProgress] = useState(0)
   const [fileCount, setFileCount] = useState({ current: 0, total: 0 })
+  const [statusText, setStatusText] = useState("")
 
   const handleClips = async (files) => {
     setUploading(true)
@@ -267,6 +299,7 @@ function VideoSessionEditor({ session, onChange, onRemove, password }) {
         const file = files[idx]
         setFileCount({ current: idx + 1, total: files.length })
         setProgress(0)
+        let clipFile = file
         let duration
         try {
           duration = await getVideoDuration(file)
@@ -275,10 +308,16 @@ function VideoSessionEditor({ session, onChange, onRemove, password }) {
           continue
         }
         if (duration > MAX_CLIP_SECONDS) {
-          alert(`"${file.name}" is ${duration.toFixed(1)}s long - clips must be ${MAX_CLIP_SECONDS}s or shorter. Skipped.`)
-          continue
+          try {
+            clipFile = await trimVideo(file, MAX_CLIP_SECONDS, setStatusText)
+          } catch (err) {
+            alert(`Could not auto-trim "${file.name}" - skipped. (${err.message})`)
+            setStatusText("")
+            continue
+          }
+          setStatusText("")
         }
-        const blob = await uploadVideo(file, password, setProgress)
+        const blob = await uploadVideo(clipFile, password, setProgress)
         uploaded.push(blob.url)
       }
       onChange({ ...session, clips: [...session.clips, ...uploaded] })
@@ -313,7 +352,7 @@ function VideoSessionEditor({ session, onChange, onRemove, password }) {
 
       <label className="text-sm text-zinc-400 self-start">
         <span className="inline-block bg-zinc-800 border border-zinc-700 hover:border-blue-500 text-white px-4 py-2 rounded-sm cursor-pointer transition-colors">
-          {uploading ? `Uploading ${fileCount.current}/${fileCount.total}... ${progress}%` : "+ Add clips (max 30s each)"}
+          {uploading ? (statusText || `Uploading ${fileCount.current}/${fileCount.total}... ${progress}%`) : "+ Add clips (any length - over 30s auto-trims)"}
         </span>
         <input type="file" accept="video/*" multiple onChange={(e) => handleClips(Array.from(e.target.files))} className="hidden" />
       </label>
