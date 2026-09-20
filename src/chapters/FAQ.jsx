@@ -4,7 +4,7 @@ import { motion } from "framer-motion"
 const FAQS = [
   {
     q: "What kind of music does DJ TIMKEY play?",
-    a: "No fixed lane. Afrobeats, Amapiano, Gengetone, Afro House, Hip-Hop, Dancehall - he plays whatever the crowd is actually feeling that night, not a set list decided beforehand.",
+    a: "No fixed lane. Afrobeats, Amapiano, Gengetone, Afro House, Hip-Hop, Dancehall, he plays whatever the crowd is actually feeling that night, not a set list decided beforehand.",
   },
   {
     q: "How do I book him?",
@@ -12,7 +12,7 @@ const FAQS = [
   },
   {
     q: "How early should I lock in a date?",
-    a: "The sooner the better, honestly. Weekends and December fill up quick. If it's short notice though, still ask - sometimes it works out.",
+    a: "The sooner the better, honestly. Weekends and December fill up quick. If it's short notice though, still ask. Sometimes it works out.",
   },
   {
     q: "What kind of events does he do?",
@@ -20,7 +20,7 @@ const FAQS = [
   },
   {
     q: "Can I request songs?",
-    a: "Always. Send them before the event or just shout them out on the night - he'll find a way to fit them in.",
+    a: "Always. Send them before the event or just shout them out on the night. He'll find a way to fit them in.",
   },
   {
     q: "Does he travel for gigs outside Nairobi?",

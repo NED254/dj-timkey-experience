@@ -1,8 +1,8 @@
-﻿import { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const BIO_LINES = [
-  "Timkey reads a room and keeps it moving - that's the reputation behind the Mr. Beatnician tag.",
+  "Timkey reads a room and keeps it moving. That's the reputation behind the Mr. Beatnician tag.",
   "He works comfortably across genres rather than sticking to one lane: Afrobeats, Amapiano, Gengetone, Afro House, Hip-Hop, Dancehall.",
   "His sets have taken him from club nights and corporate functions to university stages, including a headline set at freshers' night.",
   "Media appearances include Citizen TV's 10 Over 10 and Hot96 guest mixes.",

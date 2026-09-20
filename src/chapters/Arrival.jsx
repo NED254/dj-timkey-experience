@@ -93,9 +93,8 @@ export default function Arrival() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5, duration: 0.7 }}
         >
-          Also known as <span className="text-white font-semibold">Mr. Beatnician</span> -
-          hype master and open-format DJ based in Kenya. Afrobeats, Amapiano, Gengetone,
-          Afro House, Hip-Hop, Dancehall - whatever the room needs.
+          Also known as <span className="text-white font-semibold">Mr. Beatnician</span>, hype master and open-format DJ based in Kenya. Afrobeats, Amapiano, Gengetone,
+          Afro House, Hip-Hop, Dancehall: whatever the room needs.
         </motion.p>
 
         <motion.div

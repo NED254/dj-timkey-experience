@@ -182,8 +182,7 @@ export default function Booking() {
         <StatusPill />
 
         <p className="text-zinc-300 text-lg max-w-xl mb-14">
-          Clubs, corporate events, campus functions, brand activations - reach out and he'll get
-          back to you directly.
+          Clubs, corporate events, campus functions, brand activations. Reach out and he'll get back to you directly.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
