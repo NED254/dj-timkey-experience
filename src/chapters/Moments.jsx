@@ -1,4 +1,4 @@
-﻿import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const MOMENTS = [
@@ -109,7 +109,7 @@ function PhoneCard({ label, src, poster, offset, onEnded, isSectionInView }) {
           muted
           playsInline
           poster={poster}
-          preload={isSectionInView ? (isCenter ? 'auto' : 'metadata') : 'none'}
+          preload={isSectionInView ? 'auto' : 'none'}
           onEnded={isCenter ? onEnded : undefined}
           className="w-full h-full object-cover"
         />
