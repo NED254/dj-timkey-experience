@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 
 export default function Ads() {
   const [ads, setAds] = useState([])
@@ -13,7 +13,7 @@ export default function Ads() {
   if (ads.length === 0) return null
 
   const items = [...ads, ...ads]
-  const duration = Math.max(10, ads.length * 4)
+  const duration = Math.max(5, ads.length * 2)
 
   return (
     <div
