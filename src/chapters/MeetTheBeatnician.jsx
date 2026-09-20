@@ -49,8 +49,7 @@ export default function MeetTheBeatnician() {
         src={isInView ? '/videos/beatnician-bg.mp4' : undefined}
       />
 
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/60 to-transparent" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950/75 via-zinc-950/35 to-transparent" />
 
       <div className="relative z-10 max-w-6xl mr-auto ml-0 lg:ml-8 grid md:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
         <motion.div
