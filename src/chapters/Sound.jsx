@@ -1,4 +1,4 @@
-import { useRef, useState, useEffect } from 'react'
+﻿import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const GENRES = ['Afrobeats', 'Amapiano', 'Gengetone', 'Afro House', 'Hip-Hop', 'Dancehall']

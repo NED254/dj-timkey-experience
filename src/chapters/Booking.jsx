@@ -195,7 +195,7 @@ export default function Booking() {
           >
             <form onSubmit={handleSubmit} className="flex flex-col gap-5">
               <input type="hidden" name="access_key" value="43231be2-0ff5-4774-9d80-e0766b0d6b71" />
-              <input type="hidden" name="subject" value="New booking request - DJ Timkey site" />
+              <input type="hidden" name="subject" value="New booking request from DJ Timkey site" />
 
               <div className="flex flex-col gap-2">
                 <label htmlFor="name" className="text-zinc-400 text-sm">Name</label>
@@ -257,7 +257,7 @@ export default function Booking() {
 
               {status === 'success' && (
                 <p className="text-blue-400 text-sm text-center">
-                  Message sent - Timkey will get back to you soon.
+                  Message sent. Timkey will get back to you soon.
                 </p>
               )}
               {status === 'error' && (

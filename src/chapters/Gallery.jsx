@@ -88,7 +88,7 @@ function FeaturedGalleryCard({ title, credit, cover, href, isLatest }) {
       <div className="relative aspect-[4/3]">
         <img
           src={cover}
-          alt={`${title} - photo gallery by ${credit}`}
+          alt={`${title}, photo gallery by ${credit}`}
           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent" />
@@ -210,7 +210,7 @@ function SessionPhotoLightbox({ session, index, onClose, onPrev, onNext }) {
           <button className="absolute right-4 md:right-8 text-white/60 hover:text-white text-4xl leading-none px-2" onClick={(e) => { e.stopPropagation(); onNext() }} aria-label="Next">&#8250;</button>
         )}
         <p className="absolute bottom-8 left-1/2 -translate-x-1/2 text-zinc-300 text-sm uppercase tracking-widest">
-          {session.title} {session.date && `- ${session.date}`}
+          {session.title} {session.date && `&bull; ${session.date}`}
         </p>
       </motion.div>
     </AnimatePresence>
@@ -279,7 +279,7 @@ function LatestSessions() {
             {photoSessions.map((session, si) => (
               <div key={si}>
                 <p className="text-zinc-400 text-sm uppercase tracking-wide mb-3">
-                  {session.title} {session.date && `- ${session.date}`}
+                  {session.title} {session.date && `&bull; ${session.date}`}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {session.photos.map((url, pi) => (
@@ -305,7 +305,7 @@ function LatestSessions() {
             {videoSessions.map((session, si) => (
               <div key={si}>
                 <p className="text-zinc-400 text-sm uppercase tracking-wide mb-3">
-                  {session.title} {session.date && `- ${session.date}`}
+                  {session.title} {session.date && `&bull; ${session.date}`}
                 </p>
                 <div className="flex flex-wrap gap-3">
                   {session.clips.map((url, ci) => (
@@ -392,7 +392,7 @@ export default function Gallery() {
           transition={{ duration: 0.7 }}
         >
           <p className="text-zinc-400 text-base max-w-sm">
-            This is just a glimpse - follow along for the full story, or bring Timkey to your next event.
+            This is just a glimpse. Follow along for more, or bring Timkey to your next event.
           </p>
           <div className="flex flex-wrap gap-3">
             {SOCIALS.map(({ label, handle, href, Icon }) => (
