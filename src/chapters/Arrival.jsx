@@ -1,4 +1,4 @@
-﻿import { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const NAME_PARTS = [
@@ -129,7 +129,7 @@ export default function Arrival() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2.2, duration: 0.8 }}
       >
-        <span>Scroll to enter the experience</span>
+        <span>Scroll down</span>
         <span className="w-px h-8 bg-zinc-400 animate-bounce" />
       </motion.div>
     </section>

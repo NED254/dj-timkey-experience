@@ -1,4 +1,4 @@
-﻿import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, useInView } from 'framer-motion'
 import { FaWhatsapp, FaEnvelope, FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
 
@@ -182,8 +182,8 @@ export default function Booking() {
         <StatusPill />
 
         <p className="text-zinc-300 text-lg max-w-xl mb-14">
-          Clubs, corporate functions, campus events, brand activations - reach out directly and
-          Timkey will get back to you.
+          Clubs, corporate events, campus functions, brand activations - reach out and he'll get
+          back to you directly.
         </p>
 
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">

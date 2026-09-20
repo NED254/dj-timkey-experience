@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { motion } from "framer-motion"
 
 function MerchCard({ name, price, image, link }) {
@@ -91,7 +91,7 @@ export default function Merch() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          Wear the brand. Official DJ Timkey merch, made for the crowd.
+          Official DJ Timkey merch - made for the people who actually show up to the sets.
         </motion.p>
 
         {loading ? (

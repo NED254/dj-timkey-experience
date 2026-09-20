@@ -1,4 +1,4 @@
-﻿import { useRef, useState, useEffect } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const GENRES = ['Afrobeats', 'Amapiano', 'Gengetone', 'Afro House', 'Hip-Hop', 'Dancehall']
@@ -388,8 +388,8 @@ export default function Sound() {
           <Vinyl />
           <div>
             <p className="text-zinc-300 text-lg max-w-xl mb-6">
-              No single genre defines a night - Timkey moves through all of these live, reading the
-              crowd and blending as he goes.
+              He doesn't stick to one genre for a whole night. Same set can go from Afrobeats to
+              House depending on what the crowd's doing.
             </p>
             <div className="flex flex-wrap gap-3 mb-8">
               {GENRES.map((genre) => (

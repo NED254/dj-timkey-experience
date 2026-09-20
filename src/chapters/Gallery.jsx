@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FaInstagram, FaTiktok, FaFacebook } from 'react-icons/fa'
 
@@ -367,8 +367,7 @@ export default function Gallery() {
           viewport={{ once: true }}
           transition={{ duration: 0.7, delay: 0.1 }}
         >
-          Moments that speak louder than words - a look at Timkey in action across clubs, campuses,
-          and brand activations.
+          Some shots from clubs, campuses, and brand events he's played.
         </motion.p>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 auto-rows-[220px] mb-14">
