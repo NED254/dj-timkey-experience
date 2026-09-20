@@ -1,4 +1,7 @@
-﻿import { useEffect, useState } from "react"
+# Run from inside dj-timkey-experience\
+
+@'
+import { useEffect, useState } from "react"
 
 export default function Ads() {
   const [ads, setAds] = useState([])
@@ -53,3 +56,7 @@ export default function Ads() {
     </div>
   )
 }
+'@ | Set-Content -Path ".\src\chapters\Ads.jsx" -Encoding UTF8
+
+Write-Host "Ads.jsx restyled: cinematic cyan-glow HUD strip, faster scroll, fade-out edges." -ForegroundColor Green
+Write-Host "Next: npm run build" -ForegroundColor Cyan
