@@ -1,4 +1,4 @@
-﻿import { useRef, useEffect } from 'react'
+import { useRef, useEffect } from 'react'
 import { motion, useInView } from 'framer-motion'
 
 const BIO_LINES = [
@@ -49,8 +49,8 @@ export default function MeetTheBeatnician() {
         src={isInView ? '/videos/beatnician-bg.mp4' : undefined}
       />
 
-      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950 via-zinc-950/85 to-zinc-950/40" />
-      <div className="absolute inset-0 z-0 bg-gradient-to-t from-zinc-950 via-transparent to-zinc-950/60" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-r from-zinc-950/90 via-zinc-950/60 to-transparent" />
+      <div className="absolute inset-0 z-0 bg-gradient-to-t from-zinc-950/70 via-transparent to-transparent" />
 
       <div className="relative z-10 max-w-6xl mr-auto ml-0 lg:ml-8 grid md:grid-cols-[0.85fr_1.15fr] gap-12 items-start">
         <motion.div
@@ -68,9 +68,7 @@ export default function MeetTheBeatnician() {
               alt="Portrait of DJ Timkey"
               className="w-full aspect-[4/5] object-cover rounded-sm shadow-2xl shadow-black/60"
             />
-            <div className="absolute -inset-px border border-blue-500/40 rounded-sm pointer-events-none" />
-            <div className="absolute -top-3 -left-3 w-8 h-8 border-t-2 border-l-2 border-blue-500" />
-            <div className="absolute -bottom-3 -right-3 w-8 h-8 border-b-2 border-r-2 border-blue-500" />
+
           </div>
         </motion.div>
 
