@@ -14,6 +14,7 @@ import Booking from './chapters/Booking'
 import FAQ from './chapters/FAQ'
 import Ads from './chapters/Ads'
 import Admin from './pages/Admin'
+import { Analytics } from '@vercel/analytics/react'
 
 function App() {
   if (typeof window !== 'undefined' && window.location.pathname === '/admin') {
@@ -36,6 +37,7 @@ function App() {
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
       <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
       <FloatingWhatsApp />
+      <Analytics />
       <footer className="bg-black border-t border-zinc-800 py-8 px-8 md:px-16 text-center">
         <p className="text-zinc-500 text-sm">&copy; 2026 DJ Timkey. All rights reserved.</p>
       </footer>
