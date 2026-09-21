@@ -704,6 +704,79 @@ function AdsManager({ password }) {
   )
 }
 
+function TestimonialsManager({ password }) {
+  const [testimonials, setTestimonials] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [saveState, setSaveState] = useState("idle")
+  const [errorMsg, setErrorMsg] = useState("")
+
+  useEffect(() => {
+    fetch("/api/testimonials")
+      .then((r) => r.json())
+      .then((data) => setTestimonials(data.testimonials || []))
+      .catch(() => setTestimonials([]))
+      .finally(() => setLoading(false))
+  }, [])
+
+  const update = (i, field, value) => {
+    setTestimonials((prev) => prev.map((t, idx) => (idx === i ? { ...t, [field]: value } : t)))
+  }
+
+  const add = () => setTestimonials((prev) => [...prev, { quote: "", name: "", role: "" }])
+  const remove = (i) => setTestimonials((prev) => prev.filter((_, idx) => idx !== i))
+
+  const save = async () => {
+    setSaveState("saving")
+    setErrorMsg("")
+    try {
+      const res = await fetch("/api/testimonials", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ password, testimonials }),
+      })
+      const data = await res.json()
+      if (!res.ok) {
+        setSaveState("error")
+        setErrorMsg(data.error || "Something went wrong")
+        return
+      }
+      setSaveState("success")
+    } catch {
+      setSaveState("error")
+      setErrorMsg("Network error")
+    }
+  }
+
+  if (loading) return <p className="text-zinc-400">Loading...</p>
+
+  return (
+    <div className="flex flex-col gap-4">
+      {testimonials.map((t, i) => (
+        <div key={i} className="bg-zinc-900 border border-zinc-800 rounded-sm p-5 flex flex-col gap-3">
+          <textarea
+            placeholder="The quote itself"
+            value={t.quote}
+            onChange={(e) => update(i, "quote", e.target.value)}
+            rows="3"
+            className="w-full bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500 resize-none"
+          />
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_auto] gap-3 items-center">
+            <input placeholder="Name" value={t.name} onChange={(e) => update(i, "name", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
+            <input placeholder="Role / event (optional)" value={t.role} onChange={(e) => update(i, "role", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
+            <button onClick={() => remove(i)} className="text-red-400 hover:text-red-300 text-sm font-semibold px-3 py-2">Remove</button>
+          </div>
+        </div>
+      ))}
+      <button onClick={add} className="border border-zinc-700 hover:border-blue-500 text-white rounded-sm py-3 transition-colors">+ Add Testimonial</button>
+      <button onClick={save} disabled={saveState === "saving"} className="mt-4 bg-blue-600 hover:bg-blue-500 text-white font-semibold py-4 rounded-sm transition-colors disabled:opacity-50">
+        {saveState === "saving" ? "Saving..." : "Save Changes"}
+      </button>
+      {saveState === "success" && <p className="text-blue-400 text-sm text-center">Saved - the live site is updated.</p>}
+      {saveState === "error" && <p className="text-red-400 text-sm text-center">{errorMsg}</p>}
+    </div>
+  )
+}
+
 export default function Admin() {
   const [password, setPassword] = useState("")
   const [unlocked, setUnlocked] = useState(false)
@@ -724,6 +797,7 @@ export default function Admin() {
           <button onClick={() => setTab("downloads")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "downloads" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Downloads</button>
           <button onClick={() => setTab("merch")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "merch" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Merch</button>
           <button onClick={() => setTab("ads")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "ads" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Ads</button>
+          <button onClick={() => setTab("testimonials")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "testimonials" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Testimonials</button>
         </div>
 
         {tab === "events" && <EventsManager password={password} />}
@@ -731,6 +805,7 @@ export default function Admin() {
         {tab === "downloads" && <DownloadsManager password={password} />}
         {tab === "merch" && <MerchManager password={password} />}
         {tab === "ads" && <AdsManager password={password} />}
+        {tab === "testimonials" && <TestimonialsManager password={password} />}
       </div>
     </div>
   )
