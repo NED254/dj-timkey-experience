@@ -11,6 +11,7 @@ import Gallery from './chapters/Gallery'
 import Merch from './chapters/Merch'
 import Testimonials from './chapters/Testimonials'
 import Booking from './chapters/Booking'
+import Newsletter from './chapters/Newsletter'
 import FAQ from './chapters/FAQ'
 import Ads from './chapters/Ads'
 import Admin from './pages/Admin'
@@ -35,6 +36,7 @@ function App() {
       <ChapterErrorBoundary><Merch /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Testimonials /></ChapterErrorBoundary>
       <ChapterErrorBoundary><Booking /></ChapterErrorBoundary>
+      <ChapterErrorBoundary><Newsletter /></ChapterErrorBoundary>
       <ChapterErrorBoundary><FAQ /></ChapterErrorBoundary>
       <FloatingWhatsApp />
       <Analytics />

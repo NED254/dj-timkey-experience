@@ -1,4 +1,4 @@
-﻿import { useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 
 export default function Events() {
@@ -9,7 +9,39 @@ export default function Events() {
   useEffect(() => {
     fetch("/api/events")
       .then((r) => r.json())
-      .then((data) => setEvents(data.events || []))
+      .then((data) => {
+        const list = data.events || []
+        setEvents(list)
+
+        const withDates = list.filter((ev) => ev.isoDate)
+        if (withDates.length > 0) {
+          const jsonLd = withDates.map((ev) => ({
+            "@context": "https://schema.org",
+            "@type": "MusicEvent",
+            name: `DJ Timkey at ${ev.venue}`,
+            startDate: ev.isoDate,
+            location: {
+              "@type": "Place",
+              name: ev.venue,
+              address: ev.city || undefined,
+            },
+            performer: {
+              "@type": "MusicGroup",
+              name: "DJ Timkey",
+            },
+            url: "https://dj-timkey-experience.vercel.app/#events",
+          }))
+
+          let script = document.getElementById("events-jsonld")
+          if (!script) {
+            script = document.createElement("script")
+            script.id = "events-jsonld"
+            script.type = "application/ld+json"
+            document.head.appendChild(script)
+          }
+          script.textContent = JSON.stringify(jsonLd)
+        }
+      })
       .catch(() => setEvents([]))
       .finally(() => setLoading(false))
   }, [])

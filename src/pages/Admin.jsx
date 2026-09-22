@@ -3,7 +3,7 @@ import { upload } from "@vercel/blob/client"
 import { FFmpeg } from "@ffmpeg/ffmpeg"
 import { fetchFile, toBlobURL } from "@ffmpeg/util"
 
-const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "" }
+const BLANK_EVENT = { date: "", venue: "", city: "", status: "", image: "", link: "", isoDate: "" }
 const MAX_CLIP_SECONDS = 30
 const MAX_IMAGE_DIMENSION = 1920
 const IMAGE_QUALITY = 0.85
@@ -205,7 +205,13 @@ function EventsManager({ password }) {
             <input placeholder="Status (e.g. Tickets open)" value={ev.status} onChange={(e) => updateEvent(i, "status", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
             <button onClick={() => removeEvent(i)} className="text-red-400 hover:text-red-300 text-sm font-semibold px-3 py-2">Remove</button>
           </div>
-          <input placeholder="Booking / ticket link (optional)" value={ev.link || ""} onChange={(e) => updateEvent(i, "link", e.target.value)} className="w-full bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_2fr] gap-3">
+            <div className="flex flex-col gap-1">
+              <label className="text-zinc-500 text-xs">Exact date (for Google search results, optional)</label>
+              <input type="date" value={ev.isoDate || ""} onChange={(e) => updateEvent(i, "isoDate", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500" />
+            </div>
+            <input placeholder="Booking / ticket link (optional)" value={ev.link || ""} onChange={(e) => updateEvent(i, "link", e.target.value)} className="bg-zinc-800 border border-zinc-700 rounded-sm px-3 py-2 text-white text-sm focus:outline-none focus:border-blue-500 self-end" />
+          </div>
           <div className="flex items-center gap-4">
             {ev.image && <img src={ev.image} alt="" className="w-16 h-16 object-cover rounded-sm border border-zinc-700" />}
             <label className="text-sm text-zinc-400">
@@ -777,6 +783,53 @@ function TestimonialsManager({ password }) {
   )
 }
 
+function SubscribersManager({ password }) {
+  const [subscribers, setSubscribers] = useState([])
+  const [loading, setLoading] = useState(true)
+  const [errorMsg, setErrorMsg] = useState("")
+
+  useEffect(() => {
+    fetch(`/api/subscribe?password=${encodeURIComponent(password)}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.error) {
+          setErrorMsg(data.error)
+        } else {
+          setSubscribers(data.subscribers || [])
+        }
+      })
+      .catch(() => setErrorMsg("Network error"))
+      .finally(() => setLoading(false))
+  }, [password])
+
+  const copyAll = () => {
+    navigator.clipboard.writeText(subscribers.join(", "))
+  }
+
+  if (loading) return <p className="text-zinc-400">Loading...</p>
+  if (errorMsg) return <p className="text-red-400 text-sm">{errorMsg}</p>
+
+  return (
+    <div className="flex flex-col gap-4">
+      <p className="text-zinc-400 text-sm">{subscribers.length} subscriber{subscribers.length === 1 ? "" : "s"}</p>
+      <div className="bg-zinc-900 border border-zinc-800 rounded-sm p-5 flex flex-col gap-2 max-h-96 overflow-y-auto">
+        {subscribers.length === 0 ? (
+          <p className="text-zinc-500 text-sm">No subscribers yet.</p>
+        ) : (
+          subscribers.map((email, i) => (
+            <p key={i} className="text-white text-sm">{email}</p>
+          ))
+        )}
+      </div>
+      {subscribers.length > 0 && (
+        <button onClick={copyAll} className="border border-zinc-700 hover:border-blue-500 text-white rounded-sm py-3 transition-colors">
+          Copy All Emails
+        </button>
+      )}
+    </div>
+  )
+}
+
 export default function Admin() {
   const [password, setPassword] = useState("")
   const [unlocked, setUnlocked] = useState(false)
@@ -798,6 +851,7 @@ export default function Admin() {
           <button onClick={() => setTab("merch")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "merch" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Merch</button>
           <button onClick={() => setTab("ads")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "ads" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Ads</button>
           <button onClick={() => setTab("testimonials")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "testimonials" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Testimonials</button>
+          <button onClick={() => setTab("subscribers")} className={`px-5 py-2 rounded-sm text-sm font-semibold uppercase transition-colors ${tab === "subscribers" ? "bg-blue-600 text-white" : "bg-zinc-800 text-zinc-400 hover:text-white"}`}>Subscribers</button>
         </div>
 
         {tab === "events" && <EventsManager password={password} />}
@@ -806,6 +860,7 @@ export default function Admin() {
         {tab === "merch" && <MerchManager password={password} />}
         {tab === "ads" && <AdsManager password={password} />}
         {tab === "testimonials" && <TestimonialsManager password={password} />}
+        {tab === "subscribers" && <SubscribersManager password={password} />}
       </div>
     </div>
   )
